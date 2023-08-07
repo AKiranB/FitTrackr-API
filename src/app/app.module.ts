@@ -10,13 +10,13 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ cache: true }),
+    ConfigModule.forRoot(),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => {
         const options: MongooseModuleOptions = {
-          uri: 'mongodb+srv://Kiran:wLY7y5ZllgfYp3gL@fittrackr-cluster.nxyaxj2.mongodb.net/?retryWrites=true&w=majority',
+          uri: configService.get<string>('DATABASE_URL'),
         };
         return options;
       },

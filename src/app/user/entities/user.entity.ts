@@ -1,8 +1,9 @@
 import { ObjectType, Field } from '@nestjs/graphql';
-import { Prop, SchemaFactory } from '@nestjs/mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Schema as MongooseSchema } from 'mongoose';
 
 @ObjectType()
+@Schema()
 export class User {
   @Field(() => String)
   _id: MongooseSchema.Types.ObjectId;

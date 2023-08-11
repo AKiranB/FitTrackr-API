@@ -20,7 +20,9 @@ export class UserResolver {
   }
 
   @Query(() => User, { name: 'findUserById' })
-  findOne(@Args('id', { type: () => Int }) id: MongooseSchema.Types.ObjectId) {
+  findOne(
+    @Args('id', { type: () => String }) id: MongooseSchema.Types.ObjectId,
+  ) {
     return this.userService.findOne(id);
   }
 
@@ -31,7 +33,7 @@ export class UserResolver {
 
   @Mutation(() => User)
   removeUser(
-    @Args('id', { type: () => Int }) id: MongooseSchema.Types.ObjectId,
+    @Args('id', { type: () => String }) id: MongooseSchema.Types.ObjectId,
   ) {
     return this.userService.remove(id);
   }

@@ -8,6 +8,8 @@ import { join } from 'path';
 import { MongooseModule, MongooseModuleOptions } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserModule } from './user/user.module';
+import { WorkoutModule } from './workout/workout.module';
+import { PlanModule } from './plan/plan.module';
 
 @Module({
   imports: [
@@ -29,6 +31,8 @@ import { UserModule } from './user/user.module';
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
     }),
     UserModule,
+    WorkoutModule,
+    PlanModule,
   ],
   controllers: [],
   providers: [AppService, AppResolver],

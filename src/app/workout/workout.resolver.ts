@@ -16,12 +16,12 @@ export class WorkoutResolver {
     return this.workoutService.create(createWorkoutInput);
   }
 
-  @Query(() => [Workout], { name: 'workout' })
+  @Query(() => [Workout], { name: 'findAllWorkouts' })
   findAll() {
     return this.workoutService.findAll();
   }
 
-  @Query(() => Workout, { name: 'workout' })
+  @Query(() => Workout, { name: 'findWorkoutById' })
   findOne(@Args('id', { type: () => Int }) id: MongooseSchema.Types.ObjectId) {
     return this.workoutService.findOne(id);
   }

@@ -9,16 +9,34 @@ type User {
   password: String!
 }
 
+type Workout {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+type Plan {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
 type Query {
   getHello: String!
   findAllUsers: [User!]!
   findUserById(id: String!): User!
+  workout(id: Int!): Workout!
+  plan(id: Int!): Plan!
 }
 
 type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
   updateUser(updateUserInput: UpdateUserInput!): User!
   removeUser(id: String!): User!
+  createWorkout(createWorkoutInput: CreateWorkoutInput!): Workout!
+  updateWorkout(updateWorkoutInput: UpdateWorkoutInput!): Workout!
+  removeWorkout(id: Int!): Workout!
+  createPlan(createPlanInput: CreatePlanInput!): Plan!
+  updatePlan(updatePlanInput: UpdatePlanInput!): Plan!
+  removePlan(id: Int!): Plan!
 }
 
 input CreateUserInput {
@@ -32,4 +50,41 @@ input UpdateUserInput {
   email: String
   password: String
   _id: String!
+}
+
+input CreateWorkoutInput {
+  date: String!
+  time: String!
+  duration: Float!
+  status: Status!
+  CreatedBy: String!
+  planID: String!
+}
+
+"""Possible status values for a workout"""
+enum Status {
+  PENDING
+  COMPLETED
+  CANCELED
+}
+
+input UpdateWorkoutInput {
+  date: String
+  time: String
+  duration: Float
+  status: Status
+  CreatedBy: String
+  planID: String
+  id: Int!
+}
+
+input CreatePlanInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdatePlanInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
 }

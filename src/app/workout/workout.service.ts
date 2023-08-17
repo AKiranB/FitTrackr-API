@@ -12,14 +12,10 @@ export class WorkoutService {
     @InjectModel(Workout.name) private workoutModule: Model<WorkoutDocument>,
   ) {}
   create(createWorkoutInput: CreateWorkoutInput) {
-    console.log('Received createWorkoutInput:', createWorkoutInput);
-
     try {
       const workout = this.workoutModule.create(createWorkoutInput);
-      console.log(workout);
       return workout;
     } catch (error) {
-      console.error('Error creating workout:', error);
       throw new Error('Failed to create workout');
     }
   }

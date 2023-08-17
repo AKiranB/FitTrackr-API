@@ -1,6 +1,5 @@
 import { InputType, Field } from '@nestjs/graphql';
 import { Status } from '../enums/status.enum';
-import { Param } from '@nestjs/common';
 import { Prop } from '@nestjs/mongoose';
 
 @InputType()

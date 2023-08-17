@@ -22,7 +22,9 @@ export class WorkoutResolver {
   }
 
   @Query(() => Workout, { name: 'findWorkoutById' })
-  findOne(@Args('id', { type: () => Int }) id: MongooseSchema.Types.ObjectId) {
+  findOne(
+    @Args('id', { type: () => String }) id: MongooseSchema.Types.ObjectId,
+  ) {
     return this.workoutService.findOne(id);
   }
 
@@ -38,7 +40,7 @@ export class WorkoutResolver {
 
   @Mutation(() => Workout)
   removeWorkout(
-    @Args('id', { type: () => Int }) id: MongooseSchema.Types.ObjectId,
+    @Args('id', { type: () => String }) id: MongooseSchema.Types.ObjectId,
   ) {
     return this.workoutService.remove(id);
   }

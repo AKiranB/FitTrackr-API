@@ -1,4 +1,4 @@
-import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { ObjectType, Field } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Schema as MongooseSchema, Types } from 'mongoose';
 import { Status } from '../enums/status.enum';
@@ -25,11 +25,13 @@ export class Workout {
   time: string;
 
   @Field(() => Status)
+  @Prop()
   status: Status;
 
   @Field(() => Number)
+  @Prop()
   duration: number;
-  //TODO- Check relations and querie/mutations
+
   @Field(() => String)
   @Prop({ type: Types.ObjectId, ref: 'User' })
   createdBy: User;

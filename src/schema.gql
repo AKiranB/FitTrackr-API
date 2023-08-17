@@ -37,7 +37,7 @@ type Query {
   findAllUsers: [User!]!
   findUserById(id: String!): User!
   findAllWorkouts: [Workout!]!
-  findWorkoutById(id: Int!): Workout!
+  findWorkoutById(id: String!): Workout!
   plan(id: Int!): Plan!
 }
 
@@ -47,7 +47,7 @@ type Mutation {
   removeUser(id: String!): User!
   createWorkout(createWorkoutInput: CreateWorkoutInput!): Workout!
   updateWorkout(updateWorkoutInput: UpdateWorkoutInput!): Workout!
-  removeWorkout(id: Int!): Workout!
+  removeWorkout(id: String!): Workout!
   createPlan(createPlanInput: CreatePlanInput!): Plan!
   updatePlan(updatePlanInput: UpdatePlanInput!): Plan!
   removePlan(id: Int!): Plan!

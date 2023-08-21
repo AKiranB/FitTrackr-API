@@ -10,6 +10,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserModule } from './user/user.module';
 import { WorkoutModule } from './workout/workout.module';
 import { PlanModule } from './plan/plan.module';
+import { ExerciseModule } from './exercise/exercise.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { PlanModule } from './plan/plan.module';
     UserModule,
     WorkoutModule,
     PlanModule,
+    ExerciseModule,
   ],
   controllers: [],
   providers: [AppService, AppResolver],

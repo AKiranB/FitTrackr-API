@@ -12,12 +12,15 @@ export class WorkoutService {
     @InjectModel(Workout.name) private workoutModule: Model<WorkoutDocument>,
   ) {}
   create(createWorkoutInput: CreateWorkoutInput) {
-    const workout = this.workoutModule.create(createWorkoutInput);
-    return workout;
+    try {
+      const workout = this.workoutModule.create(createWorkoutInput);
+      return workout;
+    } catch (error) {
+      throw new Error('Failed to create workout');
+    }
   }
 
   findAll() {
-    //TODO
     return `This action returns all workout`;
   }
 

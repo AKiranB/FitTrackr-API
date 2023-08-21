@@ -10,8 +10,21 @@ type User {
 }
 
 type Workout {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  _id: String!
+  date: String!
+  time: String!
+  status: Status!
+  duration: Float!
+  createdBy: User!
+  planID: String!
+}
+
+"""Possible status values for a workout"""
+enum Status {
+  PLANNED
+  COMPLETED
+  MISSED
+  CANCELED
 }
 
 type Plan {
@@ -23,7 +36,8 @@ type Query {
   getHello: String!
   findAllUsers: [User!]!
   findUserById(id: String!): User!
-  workout(id: Int!): Workout!
+  findAllWorkouts: [Workout!]!
+  findWorkoutById(id: String!): Workout!
   plan(id: Int!): Plan!
 }
 
@@ -33,7 +47,7 @@ type Mutation {
   removeUser(id: String!): User!
   createWorkout(createWorkoutInput: CreateWorkoutInput!): Workout!
   updateWorkout(updateWorkoutInput: UpdateWorkoutInput!): Workout!
-  removeWorkout(id: Int!): Workout!
+  removeWorkout(id: String!): Workout!
   createPlan(createPlanInput: CreatePlanInput!): Plan!
   updatePlan(updatePlanInput: UpdatePlanInput!): Plan!
   removePlan(id: Int!): Plan!
@@ -56,26 +70,19 @@ input CreateWorkoutInput {
   date: String!
   time: String!
   duration: Float!
-  status: Status!
-  CreatedBy: String!
+  status: Status! = PLANNED
+  createdBy: String!
   planID: String!
-}
-
-"""Possible status values for a workout"""
-enum Status {
-  PENDING
-  COMPLETED
-  CANCELED
 }
 
 input UpdateWorkoutInput {
   date: String
   time: String
   duration: Float
-  status: Status
-  CreatedBy: String
+  status: Status = PLANNED
+  createdBy: String
   planID: String
-  id: Int!
+  _id: String!
 }
 
 input CreatePlanInput {

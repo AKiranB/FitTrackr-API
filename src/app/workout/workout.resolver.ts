@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { WorkoutService } from './workout.service';
 import { Workout } from './entities/workout.entity';
 import { CreateWorkoutInput } from './dto/create-workout.input';
@@ -16,14 +16,21 @@ export class WorkoutResolver {
     return this.workoutService.create(createWorkoutInput);
   }
 
-  @Query(() => [Workout], { name: 'workout' })
+  @Query(() => [Workout], { name: 'findAllWorkouts' })
   findAll() {
     return this.workoutService.findAll();
   }
 
-  @Query(() => Workout, { name: 'workout' })
-  findOne(@Args('id', { type: () => Int }) id: MongooseSchema.Types.ObjectId) {
-    return this.workoutService.findOne(id);
+  @Query(() => Workout, { name: 'findWorkoutById' })
+  async findOne(
+    @Args('id', { type: () => String }) id: MongooseSchema.Types.ObjectId,
+  ) {
+    const workout = await this.workoutService
+      .findOne(id)
+      .populate({ path: 'createdBy' })
+      .exec();
+
+    return workout;
   }
 
   @Mutation(() => Workout)
@@ -38,7 +45,7 @@ export class WorkoutResolver {
 
   @Mutation(() => Workout)
   removeWorkout(
-    @Args('id', { type: () => Int }) id: MongooseSchema.Types.ObjectId,
+    @Args('id', { type: () => String }) id: MongooseSchema.Types.ObjectId,
   ) {
     return this.workoutService.remove(id);
   }

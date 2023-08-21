@@ -32,7 +32,7 @@ export class Workout {
   @Prop()
   duration: number;
 
-  @Field(() => String)
+  @Field(() => User)
   @Prop({ type: Types.ObjectId, ref: 'User' })
   createdBy: User;
 

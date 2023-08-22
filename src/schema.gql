@@ -28,13 +28,9 @@ enum Status {
 }
 
 type Plan {
-  """Example field (placeholder)"""
-  exampleField: Int!
-}
-
-type Exercise {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  _id: String!
+  name: String!
+  description: String!
 }
 
 type Query {
@@ -44,7 +40,6 @@ type Query {
   findAllWorkouts: [Workout!]!
   findWorkoutById(id: String!): Workout!
   plan(id: Int!): Plan!
-  exercise(id: Int!): Exercise!
 }
 
 type Mutation {
@@ -57,9 +52,6 @@ type Mutation {
   createPlan(createPlanInput: CreatePlanInput!): Plan!
   updatePlan(updatePlanInput: UpdatePlanInput!): Plan!
   removePlan(id: Int!): Plan!
-  createExercise(createExerciseInput: CreateExerciseInput!): Exercise!
-  updateExercise(updateExerciseInput: UpdateExerciseInput!): Exercise!
-  removeExercise(id: Int!): Exercise!
 }
 
 input CreateUserInput {
@@ -97,28 +89,10 @@ input UpdateWorkoutInput {
 input CreatePlanInput {
   name: String!
   description: String!
-  exercises: [ExerciseRepInput!]!
-}
-
-input ExerciseRepInput {
-  exerciseId: String!
-  repetitions: Int!
 }
 
 input UpdatePlanInput {
   name: String
   description: String
-  exercises: [ExerciseRepInput!]
-  id: Int!
-}
-
-input CreateExerciseInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
-}
-
-input UpdateExerciseInput {
-  """Example field (placeholder)"""
-  exampleField: Int
   id: Int!
 }

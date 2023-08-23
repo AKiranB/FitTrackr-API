@@ -7,4 +7,7 @@ export class CreatePlanInput {
 
   @Field(() => String)
   description: string;
+
+  @Field(() => String)
+  createdBy: string;
 }

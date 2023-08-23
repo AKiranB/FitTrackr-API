@@ -1,26 +1,32 @@
 import { Injectable } from '@nestjs/common';
 import { CreatePlanInput } from './dto/create-plan.input';
 import { UpdatePlanInput } from './dto/update-plan.input';
+import { InjectModel } from '@nestjs/mongoose';
+import { Plan, PlanDocument } from './entities/plan.entity';
+import { Model, Schema as MongooseSchema } from 'mongoose';
 
 @Injectable()
 export class PlanService {
+  constructor(@InjectModel(Plan.name) private planModel: Model<PlanDocument>) {}
   create(createPlanInput: CreatePlanInput) {
-    return 'This action adds a new plan';
+    const newPlan = new this.planModel(createPlanInput);
+    return newPlan.save();
   }
 
   findAll() {
     return `This action returns all plan`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} plan`;
+  findOne(id: MongooseSchema.Types.ObjectId) {
+    const plan = this.planModel.findById(id);
+    return plan;
   }
 
-  update(id: number, updatePlanInput: UpdatePlanInput) {
-    return `This action updates a #${id} plan`;
+  update(id: MongooseSchema.Types.ObjectId, updatePlanInput: UpdatePlanInput) {
+    return this.planModel.findByIdAndUpdate(id, updatePlanInput);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} plan`;
+  remove(id: MongooseSchema.Types.ObjectId) {
+    return this.planModel.findByIdAndDelete(id);
   }
 }

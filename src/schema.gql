@@ -28,17 +28,20 @@ enum Status {
 }
 
 type Plan {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  _id: String!
+  name: String!
+  description: String!
+  createdBy: User!
 }
 
 type Query {
   getHello: String!
-  findAllUsers: [User!]!
+  findAllUsers(limit: Int = 10, skip: Int = 0): [User!]!
   findUserById(id: String!): User!
   findAllWorkouts: [Workout!]!
   findWorkoutById(id: String!): Workout!
-  plan(id: Int!): Plan!
+  findAllPlans: [Plan!]!
+  findPlanById(id: String!): Plan!
 }
 
 type Mutation {
@@ -50,7 +53,7 @@ type Mutation {
   removeWorkout(id: String!): Workout!
   createPlan(createPlanInput: CreatePlanInput!): Plan!
   updatePlan(updatePlanInput: UpdatePlanInput!): Plan!
-  removePlan(id: Int!): Plan!
+  removePlan(id: String!): Plan!
 }
 
 input CreateUserInput {
@@ -86,12 +89,14 @@ input UpdateWorkoutInput {
 }
 
 input CreatePlanInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  name: String!
+  description: String!
+  createdBy: String!
 }
 
 input UpdatePlanInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+  name: String
+  description: String
+  createdBy: String
+  _id: String!
 }

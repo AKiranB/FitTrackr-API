@@ -1,8 +1,9 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { PlanService } from './plan.service';
 import { Plan } from './entities/plan.entity';
 import { CreatePlanInput } from './dto/create-plan.input';
 import { UpdatePlanInput } from './dto/update-plan.input';
+import { Schema as MongooseSchema } from 'mongoose';
 
 @Resolver(() => Plan)
 export class PlanResolver {
@@ -13,23 +14,27 @@ export class PlanResolver {
     return this.planService.create(createPlanInput);
   }
 
-  @Query(() => [Plan], { name: 'plan' })
+  @Query(() => [Plan], { name: 'findAllPlans' })
   findAll() {
     return this.planService.findAll();
   }
 
-  @Query(() => Plan, { name: 'plan' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.planService.findOne(id);
+  @Query(() => Plan, { name: 'findPlanById' })
+  findOne(
+    @Args('id', { type: () => String }) id: MongooseSchema.Types.ObjectId,
+  ) {
+    return this.planService.findOne(id).populate({ path: 'createdBy' }).exec();
   }
 
   @Mutation(() => Plan)
   updatePlan(@Args('updatePlanInput') updatePlanInput: UpdatePlanInput) {
-    return this.planService.update(updatePlanInput.id, updatePlanInput);
+    return this.planService.update(updatePlanInput._id, updatePlanInput);
   }
 
   @Mutation(() => Plan)
-  removePlan(@Args('id', { type: () => Int }) id: number) {
+  removePlan(
+    @Args('id', { type: () => String }) id: MongooseSchema.Types.ObjectId,
+  ) {
     return this.planService.remove(id);
   }
 }

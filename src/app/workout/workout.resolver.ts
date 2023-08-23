@@ -16,23 +16,6 @@ export class WorkoutResolver {
     return this.workoutService.create(createWorkoutInput);
   }
 
-  @Query(() => [Workout], { name: 'findAllWorkouts' })
-  findAll() {
-    return this.workoutService.findAll();
-  }
-
-  @Query(() => Workout, { name: 'findWorkoutById' })
-  async findOne(
-    @Args('id', { type: () => String }) id: MongooseSchema.Types.ObjectId,
-  ) {
-    const workout = await this.workoutService
-      .findOne(id)
-      .populate({ path: 'createdBy' })
-      .exec();
-
-    return workout;
-  }
-
   @Mutation(() => Workout)
   updateWorkout(
     @Args('updateWorkoutInput') updateWorkoutInput: UpdateWorkoutInput,
@@ -48,5 +31,22 @@ export class WorkoutResolver {
     @Args('id', { type: () => String }) id: MongooseSchema.Types.ObjectId,
   ) {
     return this.workoutService.remove(id);
+  }
+
+  @Query(() => [Workout], { name: 'findAllWorkouts' })
+  findAll() {
+    return this.workoutService.findAll();
+  }
+
+  @Query(() => Workout, { name: 'findWorkoutById' })
+  async findOne(
+    @Args('id', { type: () => String }) id: MongooseSchema.Types.ObjectId,
+  ) {
+    const workout = await this.workoutService
+      .findOne(id)
+      .populate({ path: 'createdBy' })
+      .exec();
+
+    return workout;
   }
 }

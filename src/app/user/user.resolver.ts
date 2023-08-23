@@ -4,6 +4,7 @@ import { User } from './entities/user.entity';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { Schema as MongooseSchema } from 'mongoose';
+import { GetPaginatedArgs } from '../common/get-paginated-args';
 
 @Resolver(() => User)
 export class UserResolver {
@@ -15,8 +16,8 @@ export class UserResolver {
   }
 
   @Query(() => [User], { name: 'findAllUsers' })
-  findAll() {
-    return this.userService.findAll();
+  findAll(@Args() args: GetPaginatedArgs) {
+    return this.userService.findAll(args.limit, args.skip);
   }
 
   @Query(() => User, { name: 'findUserById' })

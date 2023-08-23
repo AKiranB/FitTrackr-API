@@ -20,6 +20,6 @@ export class CreateWorkoutInput {
   createdBy: string;
 
   @Field(() => String)
-  @Prop({ nullable: true })
+  @Prop()
   planID: string;
 }

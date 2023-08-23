@@ -13,8 +13,9 @@ export class UserService {
     return user;
   }
 
-  findAll() {
-    return `This action returns all user`;
+  async findAll(limit: number, skip: number) {
+    const users = await this.userModel.find().skip(skip).limit(limit);
+    return users;
   }
 
   findOne(id: MongooseSchema.Types.ObjectId) {

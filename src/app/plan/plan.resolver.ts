@@ -14,12 +14,12 @@ export class PlanResolver {
     return this.planService.create(createPlanInput);
   }
 
-  @Query(() => [Plan], { name: 'plan' })
+  @Query(() => [Plan], { name: 'findAllPlans' })
   findAll() {
     return this.planService.findAll();
   }
 
-  @Query(() => Plan, { name: 'plan' })
+  @Query(() => Plan, { name: 'findPlanById' })
   findOne(
     @Args('id', { type: () => String }) id: MongooseSchema.Types.ObjectId,
   ) {

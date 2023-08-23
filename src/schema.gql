@@ -36,11 +36,12 @@ type Plan {
 
 type Query {
   getHello: String!
-  findAllUsers: [User!]!
+  findAllUsers(limit: Int = 10, skip: Int = 0): [User!]!
   findUserById(id: String!): User!
   findAllWorkouts: [Workout!]!
   findWorkoutById(id: String!): Workout!
-  plan(id: String!): Plan!
+  findAllPlans: [Plan!]!
+  findPlanById(id: String!): Plan!
 }
 
 type Mutation {

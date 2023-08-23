@@ -23,7 +23,7 @@ export class PlanResolver {
   findOne(
     @Args('id', { type: () => String }) id: MongooseSchema.Types.ObjectId,
   ) {
-    return this.planService.findOne(id);
+    return this.planService.findOne(id).populate({ path: 'createdBy' }).exec();
   }
 
   @Mutation(() => Plan)

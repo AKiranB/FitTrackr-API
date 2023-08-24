@@ -45,6 +45,7 @@ export class WorkoutResolver {
     const workout = await this.workoutService
       .findOne(id)
       .populate({ path: 'createdBy' })
+      .populate({ path: 'plan' })
       .exec();
 
     return workout;

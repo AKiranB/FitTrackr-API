@@ -15,7 +15,7 @@ export class Exercise {
   @Field(() => String)
   @Prop()
   description?: string;
-
+  //This is the user that created it
   @Field(() => String)
   @Prop()
   createdBy: string;

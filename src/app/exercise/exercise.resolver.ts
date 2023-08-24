@@ -14,7 +14,7 @@ export class ExerciseResolver {
     return this.exerciseService.create(createExerciseInput);
   }
 
-  @Query(() => [Exercise], { name: 'exercise' })
+  @Query(() => [Exercise], { name: 'findAllExercises' })
   findAll() {
     return this.exerciseService.findAll();
   }

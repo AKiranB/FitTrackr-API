@@ -9,6 +9,20 @@ type User {
   password: String!
 }
 
+type PlannedExercises {
+  exerciseID: String!
+  sets: Float!
+  reps: Float!
+}
+
+type Plan {
+  _id: String!
+  name: String!
+  description: String!
+  createdBy: User!
+  exercises: [PlannedExercises!]!
+}
+
 type Workout {
   _id: String!
   date: String!
@@ -16,7 +30,7 @@ type Workout {
   status: Status!
   duration: Float!
   createdBy: User!
-  planID: String!
+  plan: Plan!
 }
 
 """Possible status values for a workout"""
@@ -27,11 +41,11 @@ enum Status {
   CANCELED
 }
 
-type Plan {
+type Exercise {
   _id: String!
   name: String!
   description: String!
-  createdBy: User!
+  createdBy: String!
 }
 
 type Query {
@@ -42,6 +56,7 @@ type Query {
   findWorkoutById(id: String!): Workout!
   findAllPlans: [Plan!]!
   findPlanById(id: String!): Plan!
+  findAllExercises: [Exercise!]!
 }
 
 type Mutation {
@@ -54,6 +69,8 @@ type Mutation {
   createPlan(createPlanInput: CreatePlanInput!): Plan!
   updatePlan(updatePlanInput: UpdatePlanInput!): Plan!
   removePlan(id: String!): Plan!
+  createExercise(createExerciseInput: CreateExerciseInput!): Exercise!
+  removeExercise(id: Int!): Exercise!
 }
 
 input CreateUserInput {
@@ -75,7 +92,7 @@ input CreateWorkoutInput {
   duration: Float!
   status: Status! = PLANNED
   createdBy: String!
-  planID: String!
+  plan: String!
 }
 
 input UpdateWorkoutInput {
@@ -84,7 +101,7 @@ input UpdateWorkoutInput {
   duration: Float
   status: Status = PLANNED
   createdBy: String
-  planID: String
+  plan: String
   _id: String!
 }
 
@@ -92,11 +109,25 @@ input CreatePlanInput {
   name: String!
   description: String!
   createdBy: String!
+  exercises: [CreatePlannedExercisesInput!]!
+}
+
+input CreatePlannedExercisesInput {
+  exerciseID: String!
+  sets: Float!
+  reps: Float!
 }
 
 input UpdatePlanInput {
   name: String
   description: String
   createdBy: String
+  exercises: [CreatePlannedExercisesInput!]
   _id: String!
+}
+
+input CreateExerciseInput {
+  name: String!
+  description: String!
+  createdBy: String!
 }

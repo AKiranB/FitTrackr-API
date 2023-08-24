@@ -21,5 +21,5 @@ export class CreateWorkoutInput {
 
   @Field(() => String)
   @Prop()
-  planID: string;
+  plan: string;
 }

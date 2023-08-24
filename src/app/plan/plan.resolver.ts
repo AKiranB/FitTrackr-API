@@ -19,11 +19,16 @@ export class PlanResolver {
     return this.planService.findAll();
   }
 
+  // Populate the exercises field
   @Query(() => Plan, { name: 'findPlanById' })
   findOne(
     @Args('id', { type: () => String }) id: MongooseSchema.Types.ObjectId,
   ) {
-    return this.planService.findOne(id).populate({ path: 'createdBy' }).exec();
+    return this.planService
+      .findOne(id)
+      .populate({ path: 'createdBy' })
+      .populate({ path: 'exercises.exerciseID' })
+      .exec();
   }
 
   @Mutation(() => Plan)

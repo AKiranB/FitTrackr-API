@@ -3,6 +3,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Schema as MongooseSchema, Types } from 'mongoose';
 import { Status } from '../enums/status.enum';
 import { User } from '../../user/entities/user.entity';
+import { Plan } from '../../plan/entities/plan.entity';
 
 @ObjectType()
 @Schema()
@@ -36,9 +37,9 @@ export class Workout {
   @Prop({ type: Types.ObjectId, ref: 'User' })
   createdBy: User;
 
-  @Field(() => String)
-  @Prop({ nullable: true })
-  planID: string;
+  @Field(() => Plan)
+  @Prop({ type: Types.ObjectId, ref: 'Plan' })
+  plan: Plan;
 }
 
 export type WorkoutDocument = Workout & Document;

@@ -4,6 +4,7 @@ import { Workout } from './entities/workout.entity';
 import { CreateWorkoutInput } from './dto/create-workout.input';
 import { UpdateWorkoutInput } from './dto/update-workout.input';
 import { Schema as MongooseSchema } from 'mongoose';
+import { GenericFilterInput } from '../common/inputs/filter-input';
 
 @Resolver(() => Workout)
 export class WorkoutResolver {
@@ -34,8 +35,27 @@ export class WorkoutResolver {
   }
 
   @Query(() => [Workout], { name: 'findAllWorkouts' })
-  findAll() {
-    return this.workoutService.findAll();
+  async findAll(
+    @Args('filter', { nullable: true }) filter: GenericFilterInput,
+  ) {
+    try {
+      const workouts = await this.workoutService.findAll();
+      const populatedWorkouts = await Promise.all(
+        workouts.map(async (workout) => {
+          try {
+            const populatedWorkout = await workout.populate('plan');
+            return populatedWorkout;
+          } catch (error) {
+            console.error(`Error populating 'plan' field: ${error.message}`);
+            return workout;
+          }
+        }),
+      );
+      return populatedWorkouts;
+    } catch (error) {
+      console.error(`Error finding workouts: ${error.message}`);
+      throw new Error('An error occurred while fetching workouts.');
+    }
   }
 
   @Query(() => Workout, { name: 'findWorkoutById' })

@@ -52,11 +52,15 @@ type Query {
   getHello: String!
   findAllUsers(limit: Int = 10, skip: Int = 0): [User!]!
   findUserById(id: String!): User!
-  findAllWorkouts: [Workout!]!
+  findAllWorkouts(filter: GenericFilterInput): [Workout!]!
   findWorkoutById(id: String!): Workout!
   findAllPlans: [Plan!]!
   findPlanById(id: String!): Plan!
   findAllExercises: [Exercise!]!
+}
+
+input GenericFilterInput {
+  createdBy: String!
 }
 
 type Mutation {

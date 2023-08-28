@@ -4,8 +4,6 @@ import { UpdateUserInput } from './dto/update-user.input';
 import { Model, Schema as MongooseSchema } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { UserDocument, User } from './entities/user.entity';
-import * as bcrypt from 'bcrypt';
-import { LoginUserInput } from './dto/login-user.input';
 
 @Injectable()
 export class UserService {
@@ -20,20 +18,6 @@ export class UserService {
     });
 
     return createdUser.save();
-  }
-
-  async login(loginInput: LoginUserInput) {
-    const { email, password } = loginInput;
-    const user = await this.userModel.findOne({ email });
-    if (!user) {
-      throw new Error('User not found');
-    }
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-    if (isPasswordValid) {
-      return user;
-    } else {
-      throw new Error('Invalid password');
-    }
   }
 
   async findAll(limit: number, skip: number) {

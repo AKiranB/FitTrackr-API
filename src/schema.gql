@@ -82,7 +82,7 @@ type Mutation {
   createExercise(createExerciseInput: CreateExerciseInput!): Exercise!
   removeExercise(id: Int!): Exercise!
   login(loginUserInput: LoginUserInput!): LoginResponse!
-  signup(sigUpUserInput: CreateUserInput!): LoginResponse!
+  signup(sigUpUserInput: CreateUserInput!): User!
 }
 
 input CreateUserInput {

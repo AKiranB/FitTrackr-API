@@ -45,8 +45,8 @@ export class AuthService {
   }
 
   async signup(payload: CreateUserInput) {
-    const user = await this.userService.findOneByEmail(payload.email);
-    if (user) {
+    const userExists = await this.userService.findOneByEmail(payload.email);
+    if (userExists) {
       throw new Error('User already exists');
     }
 
@@ -55,6 +55,8 @@ export class AuthService {
     const hash = await bcrypt.hash(payload.password, saltRounds);
     console.log(hash);
 
-    return this.userService.create({ ...payload, password: hash });
+    const user = await this.userService.create({ ...payload, password: hash });
+    console.log('in the service', user);
+    return user;
   }
 }

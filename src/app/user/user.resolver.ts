@@ -15,18 +15,6 @@ export class UserResolver {
     return this.userService.create(createUserInput);
   }
 
-  @Query(() => [User], { name: 'findAllUsers' })
-  findAll(@Args() args: GetPaginatedArgs) {
-    return this.userService.findAll(args.limit, args.skip);
-  }
-
-  @Query(() => User, { name: 'findUserById' })
-  findOne(
-    @Args('id', { type: () => String }) id: MongooseSchema.Types.ObjectId,
-  ) {
-    return this.userService.findOne(id);
-  }
-
   @Mutation(() => User)
   updateUser(@Args('updateUserInput') updateUserInput: UpdateUserInput) {
     return this.userService.update(updateUserInput._id, updateUserInput);
@@ -37,5 +25,21 @@ export class UserResolver {
     @Args('id', { type: () => String }) id: MongooseSchema.Types.ObjectId,
   ) {
     return this.userService.remove(id);
+  }
+  @Query(() => [User], { name: 'findAllUsers' })
+  findAll(@Args() args: GetPaginatedArgs) {
+    return this.userService.findAll(args.limit, args.skip);
+  }
+
+  @Query(() => User, { name: 'findUserById' })
+  findOne(
+    @Args('id', { type: () => String }) id: MongooseSchema.Types.ObjectId,
+  ) {
+    return this.userService.findOneById(id);
+  }
+
+  @Query(() => User, { name: 'findUserByEmail' })
+  findOneByEmail(@Args('email') email: string) {
+    return this.userService.findOneByEmail(email);
   }
 }

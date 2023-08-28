@@ -48,10 +48,16 @@ type Exercise {
   createdBy: String!
 }
 
+type LoginResponse {
+  token: String!
+  user: User!
+}
+
 type Query {
   getHello: String!
   findAllUsers(limit: Int = 10, skip: Int = 0): [User!]!
   findUserById(id: String!): User!
+  findUserByEmail(email: String!): User!
   findAllWorkouts(filter: GenericFilterInput): [Workout!]!
   findWorkoutById(id: String!): Workout!
   findAllPlans: [Plan!]!
@@ -75,6 +81,8 @@ type Mutation {
   removePlan(id: String!): Plan!
   createExercise(createExerciseInput: CreateExerciseInput!): Exercise!
   removeExercise(id: Int!): Exercise!
+  login(loginUserInput: LoginUserInput!): LoginResponse!
+  signup(sigUpUserInput: CreateUserInput!): LoginResponse!
 }
 
 input CreateUserInput {
@@ -134,4 +142,9 @@ input CreateExerciseInput {
   name: String!
   description: String!
   createdBy: String!
+}
+
+input LoginUserInput {
+  email: String!
+  password: String!
 }

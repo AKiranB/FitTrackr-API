@@ -10,6 +10,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     ConfigModule.forRoot({ cache: true }),
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
   ],
+  exports: [UserService],
   providers: [UserResolver, UserService, ConfigService],
 })
 export class UserModule {}

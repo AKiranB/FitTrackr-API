@@ -5,7 +5,6 @@ import { Model, Schema as MongooseSchema } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { UserDocument, User } from './entities/user.entity';
 import * as bcrypt from 'bcrypt';
-import { ConfigService } from '@nestjs/config';
 import { LoginUserInput } from './dto/login-user.input';
 
 @Injectable()
@@ -13,17 +12,11 @@ export class UserService {
   constructor(
     @InjectModel(User.name)
     private userModel: Model<UserDocument>,
-    private configService: ConfigService,
   ) {}
 
   async create(createUserInput: CreateUserInput) {
-    const hash = await bcrypt.hash(
-      createUserInput.password,
-      this.configService.get<string>('SALT_ROUNDS'),
-    );
     const createdUser = new this.userModel({
       ...createUserInput,
-      password: hash,
     });
 
     return createdUser.save();
@@ -48,9 +41,13 @@ export class UserService {
     return users;
   }
 
-  findOne(id: MongooseSchema.Types.ObjectId) {
+  findOneById(id: MongooseSchema.Types.ObjectId) {
     const user = this.userModel.findById(id);
     return user;
+  }
+
+  findOneByEmail(email: string) {
+    return this.userModel.findOne({ email });
   }
 
   update(id: MongooseSchema.Types.ObjectId, updateUserInput: UpdateUserInput) {

@@ -11,6 +11,7 @@ import { UserModule } from './user/user.module';
 import { WorkoutModule } from './workout/workout.module';
 import { PlanModule } from './plan/plan.module';
 import { ExerciseModule } from './exercise/exercise.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { ExerciseModule } from './exercise/exercise.module';
     WorkoutModule,
     PlanModule,
     ExerciseModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [AppService, AppResolver],

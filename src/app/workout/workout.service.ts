@@ -28,7 +28,7 @@ export class WorkoutService {
         .exec();
       return workouts;
     }
-    const workouts = this.workoutModel.find().exec();
+    const workouts = this.workoutModel.find();
     return workouts;
   }
 

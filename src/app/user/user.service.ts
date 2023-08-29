@@ -7,10 +7,17 @@ import { UserDocument, User } from './entities/user.entity';
 
 @Injectable()
 export class UserService {
-  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
-  create(createUserInput: CreateUserInput) {
-    const user = this.userModel.create(createUserInput);
-    return user;
+  constructor(
+    @InjectModel(User.name)
+    private userModel: Model<UserDocument>,
+  ) {}
+
+  async create(createUserInput: CreateUserInput) {
+    const createdUser = new this.userModel({
+      ...createUserInput,
+    });
+
+    return createdUser.save();
   }
 
   async findAll(limit: number, skip: number) {
@@ -18,9 +25,13 @@ export class UserService {
     return users;
   }
 
-  findOne(id: MongooseSchema.Types.ObjectId) {
+  findOneById(id: MongooseSchema.Types.ObjectId) {
     const user = this.userModel.findById(id);
     return user;
+  }
+
+  findOneByEmail(email: string) {
+    return this.userModel.findOne({ email });
   }
 
   update(id: MongooseSchema.Types.ObjectId, updateUserInput: UpdateUserInput) {

@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { AppResolver } from './app.resolver';
 import { AppService } from './app.service';
-import { ApolloDriverConfig, ApolloDriver } from '@nestjs/apollo';
+import { ApolloDriver } from '@nestjs/apollo';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
 import { join } from 'path';
@@ -11,6 +11,7 @@ import { UserModule } from './user/user.module';
 import { WorkoutModule } from './workout/workout.module';
 import { PlanModule } from './plan/plan.module';
 import { ExerciseModule } from './exercise/exercise.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -25,7 +26,8 @@ import { ExerciseModule } from './exercise/exercise.module';
         return options;
       },
     }),
-    GraphQLModule.forRoot<ApolloDriverConfig>({
+    GraphQLModule.forRoot({
+      cors: true,
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       playground: false,
@@ -35,6 +37,7 @@ import { ExerciseModule } from './exercise/exercise.module';
     WorkoutModule,
     PlanModule,
     ExerciseModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [AppService, AppResolver],

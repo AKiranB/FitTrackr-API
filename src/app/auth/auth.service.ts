@@ -51,12 +51,8 @@ export class AuthService {
     }
 
     const saltRounds = Number(this.configService.get<string>('SALT_ROUNDS'));
-    console.log(saltRounds);
     const hash = await bcrypt.hash(payload.password, saltRounds);
-    console.log(hash);
-
     const user = await this.userService.create({ ...payload, password: hash });
-    console.log('in the service', user);
     return user;
   }
 }

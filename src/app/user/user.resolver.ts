@@ -27,7 +27,7 @@ export class UserResolver {
     return this.userService.remove(id);
   }
   @Query(() => [User], { name: 'findAllUsers' })
-  findAll(@Args() args: GetPaginatedArgs) {
+  findAll(@Args() args?: GetPaginatedArgs) {
     return this.userService.findAll(args.limit, args.skip);
   }
 

@@ -20,7 +20,7 @@ export class UserService {
     return createdUser.save();
   }
 
-  async findAll(limit?: number, skip?: number) {
+  async findAll(limit: number, skip: number) {
     const users = await this.userModel.find().skip(skip).limit(limit);
     return users;
   }
@@ -35,7 +35,7 @@ export class UserService {
   }
 
   update(id: MongooseSchema.Types.ObjectId, updateUserInput: UpdateUserInput) {
-    return this.userModel.findByIdAndUpdate(id, updateUserInput);
+    return this.userModel.findByIdAndUpdate(id, updateUserInput, { new: true });
   }
 
   remove(id: MongooseSchema.Types.ObjectId) {

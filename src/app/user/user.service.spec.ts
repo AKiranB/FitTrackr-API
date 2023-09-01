@@ -81,8 +81,8 @@ describe('UserService', () => {
     const user = await service.create(createUserInput);
     const updatedUser = await service.update(user._id, updateUserInput);
     expect(updatedUser).not.toBeNull();
-    expect(updatedUser.email).toEqual(user.email);
-    expect(updatedUser.name).toEqual(user.name);
+    expect(updatedUser.email).toEqual(updateUserInput.email);
+    expect(updatedUser.name).toEqual(updateUserInput.name);
   });
 
   it('should delete a user', async () => {
@@ -95,7 +95,7 @@ describe('UserService', () => {
   it('should find all users', async () => {
     await service.create({ ...createUserInput, email: chance.email() });
     await service.create({ ...createUserInput, email: chance.email() });
-    const users = await service.findAll();
+    const users = await service.findAll(10, 0);
     expect(users.length).toEqual(2);
   });
 });

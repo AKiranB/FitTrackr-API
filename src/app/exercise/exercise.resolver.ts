@@ -2,6 +2,7 @@ import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { ExerciseService } from './exercise.service';
 import { Exercise } from './entities/exercise.entity';
 import { CreateExerciseInput } from './dto/create-exercise.input';
+import { GenericFilterInput } from '../common/inputs/filter-input';
 
 @Resolver(() => Exercise)
 export class ExerciseResolver {
@@ -15,8 +16,8 @@ export class ExerciseResolver {
   }
 
   @Query(() => [Exercise], { name: 'findAllExercises' })
-  findAll() {
-    return this.exerciseService.findAll();
+  findAll(@Args('filter', { nullable: true }) filter: GenericFilterInput) {
+    return this.exerciseService.findAll(filter);
   }
 
   @Mutation(() => Exercise)

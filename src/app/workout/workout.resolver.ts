@@ -39,7 +39,7 @@ export class WorkoutResolver {
     @Args('filter', { nullable: true }) filter: GenericFilterInput,
   ) {
     try {
-      const workouts = await this.workoutService.findAll();
+      const workouts = await this.workoutService.findAll(filter);
       const populatedWorkouts = await Promise.all(
         workouts.map(async (workout) => {
           try {

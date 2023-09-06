@@ -3,6 +3,7 @@ import { ExerciseService } from './exercise.service';
 import { Exercise } from './entities/exercise.entity';
 import { CreateExerciseInput } from './dto/create-exercise.input';
 import { GenericFilterInput } from '../common/inputs/filter-input';
+import { Schema as MongooseSchema } from 'mongoose';
 
 @Resolver(() => Exercise)
 export class ExerciseResolver {
@@ -21,7 +22,9 @@ export class ExerciseResolver {
   }
 
   @Mutation(() => Exercise)
-  removeExercise(@Args('id', { type: () => Int }) id: number) {
+  removeExercise(
+    @Args('id', { type: () => Int }) id: MongooseSchema.Types.ObjectId,
+  ) {
     return this.exerciseService.remove(id);
   }
 }

@@ -20,24 +20,8 @@ export class PlanResolver {
   async findAll(
     @Args('filter', { nullable: true }) filter: GenericFilterInput,
   ) {
-    try {
-      const plans = await this.planService.findAll(filter);
-      const populatedPlans = await Promise.all(
-        plans.map(async (plan) => {
-          try {
-            const populatedPlan = await plan.populate('exercises.exerciseID');
-            return populatedPlan;
-          } catch (error) {
-            console.error(`Error populating 'plan' field: ${error.message}`);
-            return plan;
-          }
-        }),
-      );
-      return populatedPlans;
-    } catch (error) {
-      console.error(`Error finding workouts: ${error.message}`);
-      throw new Error('An error occurred while fetching workouts.');
-    }
+    const plans = await this.planService.findAll(filter).populate('createdBy');
+    return plans;
   }
 
   @Query(() => Plan, { name: 'findPlanById' })

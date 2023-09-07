@@ -15,7 +15,7 @@ export class PlanService {
   }
 
   findAll(filter: GenericFilterInput) {
-    const plans = this.planModel.find({ createdBy: filter.createdBy }).exec();
+    const plans = this.planModel.find({ createdBy: filter.createdBy });
     return plans;
   }
 

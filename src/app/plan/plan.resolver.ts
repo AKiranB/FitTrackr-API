@@ -5,7 +5,6 @@ import { CreatePlanInput } from './dto/create-plan.input';
 import { UpdatePlanInput } from './dto/update-plan.input';
 import { Schema as MongooseSchema } from 'mongoose';
 import { GenericFilterInput } from '../common/inputs/filter-input';
-import { PlannedExercises } from './entities/plan.entity';
 
 @Resolver(() => Plan)
 export class PlanResolver {
@@ -32,8 +31,6 @@ export class PlanResolver {
       .findOne(id)
       .populate({ path: 'createdBy' })
       .exec();
-
-    console.log(plan);
 
     return plan;
   }

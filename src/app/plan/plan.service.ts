@@ -25,7 +25,7 @@ export class PlanService {
   }
 
   update(id: MongooseSchema.Types.ObjectId, updatePlanInput: UpdatePlanInput) {
-    return this.planModel.findByIdAndUpdate(id, updatePlanInput);
+    return this.planModel.findByIdAndUpdate(id, updatePlanInput, { new: true });
   }
 
   remove(id: MongooseSchema.Types.ObjectId) {

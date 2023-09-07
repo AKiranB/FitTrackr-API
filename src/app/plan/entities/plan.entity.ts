@@ -8,9 +8,9 @@ import { Exercise } from '../../exercise/entities/exercise.entity';
 @ObjectType()
 @Schema()
 export class PlannedExercises {
-  @Field(() => Exercise)
+  @Field(() => String)
   @Prop({ type: Types.ObjectId, ref: 'Exercise' })
-  exerciseID: Exercise;
+  exerciseID: string;
 
   @Field(() => Number)
   sets: number;

@@ -9,15 +9,8 @@ type User {
   password: String!
 }
 
-type Exercise {
-  _id: String!
-  name: String!
-  description: String!
-  createdBy: String!
-}
-
 type PlannedExercises {
-  exerciseID: Exercise!
+  exerciseID: String!
   sets: Float!
   reps: Float!
 }
@@ -46,6 +39,13 @@ enum Status {
   COMPLETED
   MISSED
   CANCELED
+}
+
+type Exercise {
+  _id: String!
+  name: String!
+  description: String!
+  createdBy: String!
 }
 
 type LoginResponse {

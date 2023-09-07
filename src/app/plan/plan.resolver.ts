@@ -4,6 +4,8 @@ import { Plan } from './entities/plan.entity';
 import { CreatePlanInput } from './dto/create-plan.input';
 import { UpdatePlanInput } from './dto/update-plan.input';
 import { Schema as MongooseSchema } from 'mongoose';
+import { GenericFilterInput } from '../common/inputs/filter-input';
+import { PlannedExercises } from './entities/plan.entity';
 
 @Resolver(() => Plan)
 export class PlanResolver {
@@ -11,24 +13,46 @@ export class PlanResolver {
 
   @Mutation(() => Plan)
   createPlan(@Args('createPlanInput') createPlanInput: CreatePlanInput) {
+    console.log(createPlanInput);
     return this.planService.create(createPlanInput);
   }
 
-  @Query(() => [Plan], { name: 'findAllPlans' })
-  findAll() {
-    return this.planService.findAll();
+  @Query(() => [Plan], { name: 'findAllWorkouts' })
+  async findAll(
+    @Args('filter', { nullable: true }) filter: GenericFilterInput,
+  ) {
+    try {
+      const plans = await this.planService.findAll(filter);
+      const populatedPlans = await Promise.all(
+        plans.map(async (plan) => {
+          try {
+            const populatedPlan = await plan.populate('exercises.exerciseID');
+            return populatedPlan;
+          } catch (error) {
+            console.error(`Error populating 'plan' field: ${error.message}`);
+            return plan;
+          }
+        }),
+      );
+      return populatedPlans;
+    } catch (error) {
+      console.error(`Error finding workouts: ${error.message}`);
+      throw new Error('An error occurred while fetching workouts.');
+    }
   }
 
-  // Populate the exercises field
   @Query(() => Plan, { name: 'findPlanById' })
-  findOne(
+  async findOne(
     @Args('id', { type: () => String }) id: MongooseSchema.Types.ObjectId,
   ) {
-    return this.planService
+    const plan = await this.planService
       .findOne(id)
       .populate({ path: 'createdBy' })
-      .populate({ path: 'exercises.exerciseID' })
       .exec();
+
+    console.log(plan);
+
+    return plan;
   }
 
   @Mutation(() => Plan)

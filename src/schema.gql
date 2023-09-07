@@ -9,8 +9,15 @@ type User {
   password: String!
 }
 
+type Exercise {
+  _id: String!
+  name: String!
+  description: String!
+  createdBy: String!
+}
+
 type PlannedExercises {
-  exerciseID: String!
+  exerciseID: Exercise!
   sets: Float!
   reps: Float!
 }
@@ -41,13 +48,6 @@ enum Status {
   CANCELED
 }
 
-type Exercise {
-  _id: String!
-  name: String!
-  description: String!
-  createdBy: String!
-}
-
 type LoginResponse {
   authToken: String!
   user: User!
@@ -58,11 +58,10 @@ type Query {
   findAllUsers(limit: Int = 10, skip: Int = 0): [User!]!
   findUserById(id: String!): User!
   findUserByEmail(email: String!): User!
-  findAllWorkouts(filter: GenericFilterInput): [Workout!]!
+  findAllWorkouts(filter: GenericFilterInput): [Plan!]!
   findWorkoutById(id: String!): Workout!
-  findAllPlans: [Plan!]!
   findPlanById(id: String!): Plan!
-  findAllExercises: [Exercise!]!
+  findAllExercises(filter: GenericFilterInput): [Exercise!]!
 }
 
 input GenericFilterInput {

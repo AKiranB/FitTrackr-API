@@ -3,6 +3,8 @@ import { CreateExerciseInput } from './dto/create-exercise.input';
 import { InjectModel } from '@nestjs/mongoose';
 import { Exercise, ExerciseDocument } from './entities/exercise.entity';
 import { Model } from 'mongoose';
+import { GenericFilterInput } from '../common/inputs/filter-input';
+import { Schema as MongooseSchema } from 'mongoose';
 
 @Injectable()
 export class ExerciseService {
@@ -14,11 +16,18 @@ export class ExerciseService {
     return exercise.save();
   }
 
-  findAll() {
-    return `This action returns all exercise`;
+  findAll(filter?: GenericFilterInput) {
+    if (filter) {
+      const exercises = this.exerciseModel
+        .find({ createdBy: filter.createdBy })
+        .exec();
+      return exercises;
+    }
+    const workouts = this.exerciseModel.find();
+    return workouts;
   }
 
-  remove(id: number) {
+  remove(id: MongooseSchema.Types.ObjectId) {
     return this.exerciseModel.findByIdAndDelete(id);
   }
 }

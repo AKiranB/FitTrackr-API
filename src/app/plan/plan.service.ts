@@ -4,6 +4,7 @@ import { UpdatePlanInput } from './dto/update-plan.input';
 import { InjectModel } from '@nestjs/mongoose';
 import { Plan, PlanDocument } from './entities/plan.entity';
 import { Model, Schema as MongooseSchema } from 'mongoose';
+import { GenericFilterInput } from '../common/inputs/filter-input';
 
 @Injectable()
 export class PlanService {
@@ -13,8 +14,9 @@ export class PlanService {
     return newPlan.save();
   }
 
-  findAll() {
-    return `This action returns all plan`;
+  findAll(filter: GenericFilterInput) {
+    const plans = this.planModel.find({ createdBy: filter.createdBy });
+    return plans;
   }
 
   findOne(id: MongooseSchema.Types.ObjectId) {
@@ -23,7 +25,7 @@ export class PlanService {
   }
 
   update(id: MongooseSchema.Types.ObjectId, updatePlanInput: UpdatePlanInput) {
-    return this.planModel.findByIdAndUpdate(id, updatePlanInput);
+    return this.planModel.findByIdAndUpdate(id, updatePlanInput, { new: true });
   }
 
   remove(id: MongooseSchema.Types.ObjectId) {

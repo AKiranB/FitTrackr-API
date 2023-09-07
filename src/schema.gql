@@ -29,7 +29,7 @@ type Workout {
   time: String!
   status: Status!
   duration: Float!
-  createdBy: User!
+  createdBy: String!
   plan: Plan!
 }
 
@@ -60,9 +60,9 @@ type Query {
   findUserByEmail(email: String!): User!
   findAllWorkouts(filter: GenericFilterInput): [Workout!]!
   findWorkoutById(id: String!): Workout!
-  findAllPlans: [Plan!]!
+  findAllPlans(filter: GenericFilterInput): [Plan!]!
   findPlanById(id: String!): Plan!
-  findAllExercises: [Exercise!]!
+  findAllExercises(filter: GenericFilterInput): [Exercise!]!
 }
 
 input GenericFilterInput {

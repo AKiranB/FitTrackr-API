@@ -4,6 +4,7 @@ import { Plan } from './entities/plan.entity';
 import { CreatePlanInput } from './dto/create-plan.input';
 import { UpdatePlanInput } from './dto/update-plan.input';
 import { Schema as MongooseSchema } from 'mongoose';
+import { GenericFilterInput } from '../common/inputs/filter-input';
 
 @Resolver(() => Plan)
 export class PlanResolver {
@@ -15,20 +16,23 @@ export class PlanResolver {
   }
 
   @Query(() => [Plan], { name: 'findAllPlans' })
-  findAll() {
-    return this.planService.findAll();
+  async findAll(
+    @Args('filter', { nullable: true }) filter: GenericFilterInput,
+  ) {
+    const plans = await this.planService.findAll(filter).populate('createdBy');
+    return plans;
   }
 
-  // Populate the exercises field
   @Query(() => Plan, { name: 'findPlanById' })
-  findOne(
+  async findOne(
     @Args('id', { type: () => String }) id: MongooseSchema.Types.ObjectId,
   ) {
-    return this.planService
+    const plan = await this.planService
       .findOne(id)
       .populate({ path: 'createdBy' })
-      .populate({ path: 'exercises.exerciseID' })
       .exec();
+
+    return plan;
   }
 
   @Mutation(() => Plan)

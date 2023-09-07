@@ -33,9 +33,9 @@ export class Workout {
   @Prop()
   duration: number;
 
-  @Field(() => User)
-  @Prop({ type: Types.ObjectId, ref: 'User' })
-  createdBy: User;
+  @Field(() => String)
+  @Prop()
+  createdBy: string;
 
   @Field(() => Plan)
   @Prop({ type: Types.ObjectId, ref: 'Plan' })

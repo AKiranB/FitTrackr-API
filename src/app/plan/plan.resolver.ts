@@ -13,11 +13,10 @@ export class PlanResolver {
 
   @Mutation(() => Plan)
   createPlan(@Args('createPlanInput') createPlanInput: CreatePlanInput) {
-    console.log(createPlanInput);
     return this.planService.create(createPlanInput);
   }
 
-  @Query(() => [Plan], { name: 'findAllWorkouts' })
+  @Query(() => [Plan], { name: 'findAllPlans' })
   async findAll(
     @Args('filter', { nullable: true }) filter: GenericFilterInput,
   ) {

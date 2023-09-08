@@ -2,7 +2,6 @@ import { ObjectType, Field } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Schema as MongooseSchema, Types } from 'mongoose';
 import { Status } from '../enums/status.enum';
-import { User } from '../../user/entities/user.entity';
 import { Plan } from '../../plan/entities/plan.entity';
 
 @ObjectType()

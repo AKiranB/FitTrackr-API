@@ -11,10 +11,12 @@ export class WorkoutResolver {
   constructor(private readonly workoutService: WorkoutService) {}
 
   @Mutation(() => Workout)
-  createWorkout(
+  async createWorkout(
     @Args('createWorkoutInput') createWorkoutInput: CreateWorkoutInput,
   ) {
-    return this.workoutService.create(createWorkoutInput);
+    const createdWorkout = await this.workoutService.create(createWorkoutInput);
+    const populatedWorkout = createdWorkout.populate('plan');
+    return populatedWorkout;
   }
 
   @Mutation(() => Workout)

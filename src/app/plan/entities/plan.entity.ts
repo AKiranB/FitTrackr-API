@@ -3,7 +3,6 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Schema as MongooseSchema, Types } from 'mongoose';
 import { User } from '../../user/entities/user.entity';
 import { ExerciseInfo } from '../../common/types';
-import { Exercise } from '../../exercise/entities/exercise.entity';
 
 @ObjectType()
 @Schema()

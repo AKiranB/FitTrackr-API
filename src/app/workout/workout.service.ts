@@ -41,7 +41,9 @@ export class WorkoutService {
     id: MongooseSchema.Types.ObjectId,
     updateWorkoutInput: UpdateWorkoutInput,
   ) {
-    return this.workoutModel.findByIdAndUpdate(id, updateWorkoutInput);
+    return this.workoutModel.findByIdAndUpdate(id, updateWorkoutInput, {
+      new: true,
+    });
   }
 
   remove(id: MongooseSchema.Types.ObjectId) {

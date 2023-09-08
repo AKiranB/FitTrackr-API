@@ -1,6 +1,5 @@
 import { InputType, Field } from '@nestjs/graphql';
 import { Status } from '../enums/status.enum';
-import { Prop } from '@nestjs/mongoose';
 
 @InputType()
 export class CreateWorkoutInput {
@@ -20,6 +19,5 @@ export class CreateWorkoutInput {
   createdBy: string;
 
   @Field(() => String)
-  @Prop()
   plan: string;
 }

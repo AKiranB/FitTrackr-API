@@ -1,5 +1,5 @@
 import { InputType, Field } from '@nestjs/graphql';
-import { Types, Schema as MongooseSchema } from 'mongoose';
+import { Schema as MongooseSchema } from 'mongoose';
 
 @InputType()
 export class CreatePlannedExercisesInput {

@@ -3,7 +3,17 @@ import { AppModule } from './app/app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  //TODO add env var for port below
-  await app.listen(process.env.PORT || 3000);
+  app.enableCors({
+    origin: [
+      /^(.*)/,
+    ],
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    preflightContinue: false,
+    optionsSuccessStatus: 200,
+    credentials: true,
+    allowedHeaders:
+      'Origin,X-Requested-With,Content-Type,Accept,Authorization,authorization,X-Forwarded-for',
+  })
+  await app.listen(80);
 }
 bootstrap();

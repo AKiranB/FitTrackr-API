@@ -27,7 +27,7 @@ import { AuthModule } from './auth/auth.module';
       },
     }),
     GraphQLModule.forRoot({
-      cors: true,
+      cors: false,
       introspection: true,
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
@@ -43,4 +43,4 @@ import { AuthModule } from './auth/auth.module';
   controllers: [],
   providers: [AppService, AppResolver],
 })
-export class AppModule {}
+export class AppModule { }

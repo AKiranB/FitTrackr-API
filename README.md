@@ -1,4 +1,6 @@
 API for calisthenics based fitness tracking app
+Check out the (WIP!) Client at https://github.com/AKiranB/Client
+
 Created with Nest/GQL/TS/MongoDB
 
 ## Installation

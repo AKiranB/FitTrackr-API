@@ -58,11 +58,16 @@ type Query {
   findAllUsers(limit: Int = 10, skip: Int = 0): [User!]!
   findUserById(id: String!): User!
   findUserByEmail(email: String!): User!
-  findAllWorkouts(filter: GenericFilterInput): [Workout!]!
+  findAllWorkouts(filter: WorkoutFilterInput): [Workout!]!
   findWorkoutById(id: String!): Workout!
   findAllPlans(filter: GenericFilterInput): [Plan!]!
   findPlanById(id: String!): Plan!
   findAllExercises(filter: GenericFilterInput): [Exercise!]!
+}
+
+input WorkoutFilterInput {
+  createdBy: String!
+  month: String!
 }
 
 input GenericFilterInput {

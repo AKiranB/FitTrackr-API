@@ -4,7 +4,7 @@ import { Workout } from './entities/workout.entity';
 import { CreateWorkoutInput } from './dto/create-workout.input';
 import { UpdateWorkoutInput } from './dto/update-workout.input';
 import { Schema as MongooseSchema } from 'mongoose';
-import { GenericFilterInput } from '../common/inputs/filter-input';
+import { WorkoutFilterInput } from '../common/inputs/workout-filter-input';
 
 @Resolver(() => Workout)
 export class WorkoutResolver {
@@ -14,6 +14,16 @@ export class WorkoutResolver {
   async createWorkout(
     @Args('createWorkoutInput') createWorkoutInput: CreateWorkoutInput,
   ) {
+    const existingWorkout = await this.workoutService.findOneBy({
+      createdBy: createWorkoutInput.createdBy,
+      date: createWorkoutInput.date,
+      time: createWorkoutInput.time,
+    });
+
+    if (existingWorkout) {
+      throw new Error('A workout with the same date and time already exists.');
+    }
+
     const createdWorkout = await this.workoutService.create(createWorkoutInput);
     const populatedWorkout = createdWorkout.populate('plan');
     return populatedWorkout;
@@ -38,7 +48,7 @@ export class WorkoutResolver {
 
   @Query(() => [Workout], { name: 'findAllWorkouts' })
   async findAll(
-    @Args('filter', { nullable: true }) filter: GenericFilterInput,
+    @Args('filter', { nullable: true }) filter: WorkoutFilterInput,
   ) {
     try {
       const workouts = await this.workoutService.findAll(filter);
@@ -66,7 +76,6 @@ export class WorkoutResolver {
   ) {
     const workout = await this.workoutService
       .findOne(id)
-      .populate({ path: 'createdBy' })
       .populate({ path: 'plan' })
       .exec();
 

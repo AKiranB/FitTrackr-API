@@ -5,7 +5,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Workout, WorkoutDocument } from './entities/workout.entity';
 import { Schema as MongooseSchema } from 'mongoose';
-import { GenericFilterInput } from '../common/inputs/filter-input';
+import { WorkoutFilterInput } from '../common/inputs/workout-filter-input';
 
 @Injectable()
 export class WorkoutService {
@@ -21,15 +21,36 @@ export class WorkoutService {
     }
   }
 
-  findAll(filter?: GenericFilterInput) {
-    if (filter) {
-      const workouts = this.workoutModel
-        .find({ createdBy: filter.createdBy })
-        .exec();
-      return workouts;
+  findAll(filter?: WorkoutFilterInput) {
+    interface Query {
+      createdBy?: string;
+      date?: { $regex: string };
     }
-    const workouts = this.workoutModel.find();
-    return workouts;
+    const query: Query = {};
+
+    if (filter) {
+      if (filter.createdBy) {
+        query.createdBy = filter.createdBy;
+      }
+      if (filter.month) {
+        query.date = {
+          $regex: `-${filter.month.padStart(2, '0')}-`,
+        };
+      }
+    }
+    return this.workoutModel.find(query).exec();
+  }
+  findOneBy({
+    createdBy,
+    date,
+    time,
+  }: {
+    createdBy: string;
+    date: string;
+    time: string;
+  }) {
+    const workout = this.workoutModel.findOne({ createdBy, date, time });
+    return workout;
   }
 
   findOne(id: MongooseSchema.Types.ObjectId) {
